@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct {
+    char name[50];
+    char location[50];
+} Supplier;
+typedef struct {
+    int id;
+    char name[50];
+    float price;
+    Supplier supplierDetails;
+} Product;
+
+int main() {
+    Product *ptrProduct;
+    size_t name_len;
+    ptrProduct = (Product *)malloc(sizeof(Product));
+    if (ptrProduct == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+    ptrProduct->id = 007;
+    strncpy(ptrProduct->name, "Laptop", sizeof(ptrProduct->name) - 1);
+    ptrProduct->name[sizeof(ptrProduct->name) - 1] = '\0'; 
+
+    ptrProduct->price = 48000;
+
+    strncpy(ptrProduct->supplierDetails.name, "Tech sparkzz Pvt Lmt", sizeof(ptrProduct->supplierDetails.name) - 1);
+    ptrProduct->supplierDetails.name[sizeof(ptrProduct->supplierDetails.name) - 1] = '\0';
+
+    strncpy(ptrProduct->supplierDetails.location, "Tirupur", sizeof(ptrProduct->supplierDetails.location) - 1);
+    ptrProduct->supplierDetails.location[sizeof(ptrProduct->supplierDetails.location) - 1] = '\0';
+    printf("Product Details:\n");
+    printf("ID: %d\n", ptrProduct->id);
+    printf("Name: %s\n", ptrProduct->name);
+    printf("Price: %.2f\n", ptrProduct->price);
+    printf("Supplier Name: %s\n", ptrProduct->supplierDetails.name);
+    printf("Supplier Location: %s\n", ptrProduct->supplierDetails.location);
+     free(ptrProduct);
+    ptrProduct = NULL;
+
+    return 0;
+}
