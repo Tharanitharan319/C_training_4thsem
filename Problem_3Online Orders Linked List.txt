@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Structure for product details
+struct ProductDetails {
+    char productName[50];
+    float price;
+};
+
+// Structure for order
+struct Order {
+    int orderID;
+    struct ProductDetails product;
+    char status[20];
+    struct Order* next;
+};
+
+// Function to create a new order node
+struct Order* createOrder(int orderID, char productName[], float price, char status[]) {
+    struct Order* newOrder = (struct Order*)malloc(sizeof(struct Order));
+    newOrder->orderID = orderID;
+    strcpy(newOrder->product.productName, productName);
+    newOrder->product.price = price;
+    strcpy(newOrder->status, status);
+    newOrder->next = NULL;
+    return newOrder;
+}
+
+// Function to display all orders
+void displayOrders(struct Order* head) {
+    struct Order* current = head;
+    while (current != NULL) {
+        printf("%d %s %.2f %s", 
+               current->orderID, 
+               current->product.productName, 
+               current->product.price, 
+               current->status);
+        if (current->next != NULL) {
+            printf(" -> ");
+        }
+        current = current->next;
+    }
+    printf(" -> NULL\n");
+}
+
+int main() {
+    // Create order nodes manually
+    struct Order* order1 = createOrder(201, "Mouse", 500.0, "Delivered");
+    struct Order* order2 = createOrder(202, "Keyboard", 1500.0, "Pending");
+    
+    // Link the nodes
+    order1->next = order2;
+    
+    // Display the order list
+    printf("Online Orders:\n");
+    displayOrders(order1);
+    
+    // Free memory
+    free(order1);
+    free(order2);
+    
+    return 0;
+}
